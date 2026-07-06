@@ -1,0 +1,22 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pandas
+numpy
+joblib
+scikit-learn
+xgboost
+pillow
+pdfplumber
+google-generativeai==0.8.4
+langchain==0.3.21
+langchain-community==0.3.20
+langchain-google-genai==2.0.10
+langchain-core<0.4
+chromadb==0.5.5
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+ultralytics
+python-dotenv

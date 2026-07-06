@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import HomePage from "./components/HomePage";
 import DiagnosisPage from "./components/DiagnosisPage";
 import ChatbotPage from "./components/ChatbotPage";
-import SurvivalTime from "./components/SurvivalTime"; // Import the new page
+import SurvivalTime from "./components/SurvivalTime";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -18,30 +18,29 @@ function App() {
   const renderContent = () => {
     switch (activeTab) {
       case "home":
-        return <HomePage />;
+        return <HomePage setActiveTab={setActiveTab} />;
       case "diagnosis":
         return <DiagnosisPage />;
       case "survival":
-        return <SurvivalTime />; // New page
+        return <SurvivalTime />;
       case "chat":
         return <ChatbotPage />;
-      // You can add other cases here as needed.
       default:
-        return <HomePage />;
+        return <HomePage setActiveTab={setActiveTab} />;
     }
   };
 
   return (
-    <div className="flex h-screen bg-black text-white overflow-hidden">
+    <div className="flex h-screen bg-cream text-ink-body overflow-hidden">
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full bg-gray-800 text-white"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full bg-surface border border-surface-border text-ink shadow-sm"
         onClick={toggleSidebar}
+        aria-label="Toggle navigation"
       >
         {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      {/* Floating Sidebar */}
       <Sidebar
         isOpen={sidebarOpen}
         activeTab={activeTab}
@@ -49,8 +48,7 @@ function App() {
         toggleSidebar={toggleSidebar}
       />
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-black">{renderContent()}</main>
+      <main className="flex-1 overflow-y-auto">{renderContent()}</main>
     </div>
   );
 }

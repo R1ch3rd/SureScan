@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { API_BASE } from '../lib/api';
 import { Send, User, Bot, Paperclip, Mic, Info } from 'lucide-react';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
@@ -43,7 +44,7 @@ const ChatbotPage: React.FC = () => {
     
     try {
       // Replace with your actual API endpoint for processing PDFs
-      const response = await axios.post('http://127.0.0.1:8000/api/process-pdf', formData, {
+      const response = await axios.post(`${API_BASE}/api/process-pdf`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -106,7 +107,7 @@ const ChatbotPage: React.FC = () => {
 
     try {
       // Replace with your actual API endpoint for answering questions
-      const response = await axios.post('http://127.0.0.1:8000/api/answer-question', {
+      const response = await axios.post(`${API_BASE}/api/answer-question`, {
         question: currentQuestion,
       });
       
@@ -161,17 +162,17 @@ const ChatbotPage: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 h-full flex flex-col">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+        <h1 className="text-3xl font-bold mb-2 text-ink">
           Medical Assistant
         </h1>
-        <p className="text-gray-400">
+        <p className="text-ink-muted">
           Ask questions about symptoms, conditions, or get information about brain health
         </p>
       </div>
 
       <div className="flex-1 flex">
         {/* Chat Area */}
-        <div className="flex-1 flex flex-col bg-zinc-900/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50 overflow-hidden">
+        <div className="flex-1 flex flex-col bg-surface rounded-2xl border border-surface-border overflow-hidden">
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-4">
             <div className="space-y-4">
@@ -183,15 +184,15 @@ const ChatbotPage: React.FC = () => {
                   <div 
                     className={`max-w-[80%] rounded-2xl p-4 ${
                       message.sender === 'user' 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
-                        : 'bg-zinc-800 text-white'
+                        ? 'bg-accent-btn text-white' 
+                        : 'bg-cream-deep text-ink'
                     }`}
                   >
                     <div className="flex items-center mb-2">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-2 ${
                         message.sender === 'user' 
-                          ? 'bg-blue-700' 
-                          : 'bg-purple-700'
+                          ? 'bg-accent-btn' 
+                          : 'bg-accent'
                       }`}>
                         {message.sender === 'user' ? <User size={16} /> : <Bot size={16} />}
                       </div>
@@ -213,10 +214,10 @@ const ChatbotPage: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 border-t border-zinc-800">
-            <div className="flex items-center bg-zinc-800 rounded-xl p-2">
+          <div className="p-4 border-t border-surface-border">
+            <div className="flex items-center bg-cream-deep rounded-xl p-2">
               <button 
-                className="p-2 text-gray-400 hover:text-white"
+                className="p-2 text-ink-muted hover:text-ink"
                 onClick={handleFileSelection}
               >
                 <Paperclip size={20} />
@@ -233,11 +234,11 @@ const ChatbotPage: React.FC = () => {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Type your medical question..."
-                className="flex-1 bg-transparent border-none outline-none resize-none max-h-32 text-white placeholder-gray-500 px-2"
+                className="flex-1 bg-transparent border-none outline-none resize-none max-h-32 text-ink placeholder-gray-500 px-2"
                 rows={1}
                 disabled={isProcessing}
               />
-              <button className="p-2 text-gray-400 hover:text-white">
+              <button className="p-2 text-ink-muted hover:text-ink">
                 <Mic size={20} />
               </button>
               <button 
@@ -245,8 +246,8 @@ const ChatbotPage: React.FC = () => {
                 disabled={inputText.trim() === '' || isProcessing}
                 className={`p-2 rounded-lg ${
                   inputText.trim() === '' || isProcessing
-                    ? 'text-gray-500 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                    ? 'text-ink-faint cursor-not-allowed' 
+                    : 'bg-accent-btn text-ink'
                 }`}
               >
                 <Send size={20} />
@@ -256,32 +257,32 @@ const ChatbotPage: React.FC = () => {
         </div>
 
         {/* Info Panel */}
-        <div className="hidden lg:block w-64 ml-6 bg-zinc-900/30 rounded-2xl border border-zinc-800/50 p-4">
+        <div className="hidden lg:block w-64 ml-6 bg-surface-warm rounded-2xl border border-surface-border p-4">
           <h3 className="font-semibold mb-4 flex items-center">
-            <Info size={16} className="mr-2 text-blue-400" />
+            <Info size={16} className="mr-2 text-accent-deep" />
             Helpful Tips
           </h3>
-          <div className="space-y-4 text-sm text-gray-400">
+          <div className="space-y-4 text-sm text-ink-muted">
             <div>
-              <p className="font-medium text-gray-300 mb-1">Be Specific</p>
+              <p className="font-medium text-ink-muted mb-1">Be Specific</p>
               <p>Describe your symptoms in detail including duration and severity.</p>
             </div>
             <div>
-              <p className="font-medium text-gray-300 mb-1">Upload Documents</p>
+              <p className="font-medium text-ink-muted mb-1">Upload Documents</p>
               <p>Upload medical PDFs for the assistant to analyze and reference.</p>
             </div>
             <div>
-              <p className="font-medium text-gray-300 mb-1">Emergency</p>
+              <p className="font-medium text-ink-muted mb-1">Emergency</p>
               <p>For medical emergencies, please call emergency services immediately.</p>
             </div>
             {selectedFile && (
               <div>
-                <p className="font-medium text-blue-300 mb-1">Document Loaded</p>
-                <p className="text-blue-100 text-xs truncate">{selectedFile.name}</p>
+                <p className="font-medium text-accent-deep mb-1">Document Loaded</p>
+                <p className="text-white/80 text-xs truncate">{selectedFile.name}</p>
               </div>
             )}
-            <div className="pt-4 border-t border-zinc-800">
-              <p className="text-xs text-gray-500">
+            <div className="pt-4 border-t border-surface-border">
+              <p className="text-xs text-ink-faint">
                 This AI assistant provides general information only and is not a substitute for professional medical advice, diagnosis, or treatment.
               </p>
             </div>

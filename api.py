@@ -90,7 +90,7 @@ def split_text(text, chunk_size=5000, chunk_overlap=500):
 # Function to create the vector store
 def create_vector_store(texts):
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001", 
+        model="models/gemini-embedding-001", 
         google_api_key=API_KEY
     )
     vector_index = Chroma.from_texts(texts, embeddings).as_retriever(
@@ -101,7 +101,7 @@ def create_vector_store(texts):
 # Function to set up the QA chain
 def setup_qa_chain(vector_index):
     model = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash-latest", 
+        model="gemini-flash-latest", 
         google_api_key=API_KEY,
         temperature=0.2, 
         convert_system_message_to_human=True
@@ -214,7 +214,7 @@ async def answer_question(request: QuestionRequest):
     # If no document has been uploaded, use the default AI model
     if session_id not in user_sessions:
         try:
-            model = genai.GenerativeModel("gemini-1.5-flash-latest")
+            model = genai.GenerativeModel("gemini-flash-latest")
             response = model.generate_content(
                 f"Medical question: {request.question}\n\nPlease provide a helpful, accurate, and concise response."
             )
@@ -339,11 +339,14 @@ async def classify_image(file: UploadFile = File(...)):
         np_image = np.array(image)
         yolo_results = yolo_model(np_image, conf=0.3)
         
-        # Format the bounding box results
+        # Format the bounding box results (ultralytics >=8 returns a list of
+        # Results whose boxes live under .boxes.data as [x1,y1,x2,y2,conf,cls])
         bounding_boxes = []
-        if hasattr(yolo_results, 'xyxy') and len(yolo_results.xyxy) > 0:
-            for detection in yolo_results.xyxy[0].cpu().numpy():
-                x1, y1, x2, y2, confidence, class_id = detection
+        first = yolo_results[0] if isinstance(yolo_results, (list, tuple)) else yolo_results
+        boxes = getattr(getattr(first, 'boxes', None), 'data', None)
+        if boxes is not None and len(boxes) > 0:
+            for detection in boxes.cpu().numpy():
+                x1, y1, x2, y2, confidence, class_id = detection[:6]
                 bounding_boxes.append({
                     "normalized": {
                         "x1": float(x1) / original_width,

@@ -1,5 +1,6 @@
 // SurvivalTime.tsx
 import React, { useState, FormEvent } from 'react';
+import { API_BASE } from '../lib/api';
 import axios from 'axios';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 
@@ -82,7 +83,7 @@ const SurvivalTime: React.FC = () => {
     };
   
     try {
-      const response = await axios.post('http://localhost:8000/predict', transformedData);
+      const response = await axios.post(`${API_BASE}/predict`, transformedData);
       setPrediction(response.data.predicted_survival_time_months);
     } catch (err) {
       console.error(err);
@@ -95,17 +96,17 @@ const SurvivalTime: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+        <h1 className="text-4xl font-bold mb-2 text-ink">
           Survival Time Prediction
         </h1>
-        <p className="text-gray-400 max-w-3xl mx-auto">
+        <p className="text-ink-muted max-w-3xl mx-auto">
           Enter patient details to predict the survival time based on our AI model.
         </p>
         {prediction !== null && (
-  <div className="mt-6 flex flex-col items-center justify-center p-6 bg-zinc-900/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50">
-    <AlertCircle size={48} className="text-red-500 mb-4" /> {/* Red exclamatory icon */}
+  <div className="mt-6 flex flex-col items-center justify-center p-6 bg-surface rounded-2xl border border-surface-border">
+    <AlertCircle size={48} className="text-blush mb-4" /> {/* Red exclamatory icon */}
     <h2 className="text-2xl font-bold mb-2">Predicted Survival Time</h2>
-    <p className="text-gray-300 text-lg">
+    <p className="text-ink-muted text-lg">
       {Math.floor(prediction)} months {Math.round((prediction % 1) * 30)} days
     </p>
   </div>
@@ -113,16 +114,16 @@ const SurvivalTime: React.FC = () => {
 
       </div>
       
-      <form onSubmit={handleSubmit} className="bg-zinc-900/50 backdrop-blur-sm p-8 rounded-2xl border border-zinc-800/50 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-surface p-8 rounded-2xl border border-surface-border space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Gender Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Gender</label>
+            <label className="block text-ink-muted mb-2">Gender</label>
             <select
               name="Gender"
               value={formData.Gender}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Gender</option>
@@ -134,12 +135,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Tumor Type Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Tumor Type</label>
+            <label className="block text-ink-muted mb-2">Tumor Type</label>
             <select
               name="Tumor_Type"
               value={formData.Tumor_Type}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               {["", ...tumorTypeOptions].map((option, index) => (
@@ -152,12 +153,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Tumor Grade Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Tumor Grade</label>
+            <label className="block text-ink-muted mb-2">Tumor Grade</label>
             <select
               name="Tumor_Grade"
               value={formData.Tumor_Grade}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Tumor Grade</option>
@@ -169,12 +170,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Tumor Location Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Tumor Location</label>
+            <label className="block text-ink-muted mb-2">Tumor Location</label>
             <select
               name="Tumor_Location"
               value={formData.Tumor_Location}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Tumor Location</option>
@@ -186,12 +187,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Treatment Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Treatment</label>
+            <label className="block text-ink-muted mb-2">Treatment</label>
             <select
               name="Treatment"
               value={formData.Treatment}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Treatment</option>
@@ -203,12 +204,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Treatment Outcome Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Treatment Outcome</label>
+            <label className="block text-ink-muted mb-2">Treatment Outcome</label>
             <select
               name="Treatment_Outcome"
               value={formData.Treatment_Outcome}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Outcome</option>
@@ -220,12 +221,12 @@ const SurvivalTime: React.FC = () => {
 
           {/* Recurrence Site Dropdown */}
           <div>
-            <label className="block text-gray-300 mb-2">Recurrence Site</label>
+            <label className="block text-ink-muted mb-2">Recurrence Site</label>
             <select
               name="Recurrence_Site"
               value={formData.Recurrence_Site}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               required
             >
               <option value="" disabled>Select Recurrence Site</option>
@@ -237,13 +238,13 @@ const SurvivalTime: React.FC = () => {
 
           {/* Age Input */}
           <div>
-            <label className="block text-gray-300 mb-2">Age</label>
+            <label className="block text-ink-muted mb-2">Age</label>
             <input
               type="number"
               name="Age"
               value={formData.Age}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               placeholder="45"
               required
             />
@@ -251,13 +252,13 @@ const SurvivalTime: React.FC = () => {
 
           {/* Time to Recurrence Input */}
           <div>
-            <label className="block text-gray-300 mb-2">Time to Recurrence (months)</label>
+            <label className="block text-ink-muted mb-2">Time to Recurrence (months)</label>
             <input
               type="number"
               name="Time_to_Recurrence_months"
               value={formData.Time_to_Recurrence_months}
               onChange={handleChange}
-              className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-700"
+              className="w-full p-2 rounded-md bg-cream-deep border border-surface-border"
               placeholder="10"
               required
             />
@@ -267,14 +268,14 @@ const SurvivalTime: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full py-3 bg-accent-btn rounded-xl font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {loading ? 'Predicting...' : 'Predict Survival Time'}
         </button>
       </form>
 
       {error && (
-        <div className="mt-6 flex items-center justify-center text-red-500">
+        <div className="mt-6 flex items-center justify-center text-blush">
           <AlertCircle size={24} className="mr-2" />
           <p>{error}</p>
         </div>

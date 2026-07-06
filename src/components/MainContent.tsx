@@ -19,12 +19,12 @@ const MainContent: React.FC<MainContentProps> = ({ activeTab }) => {
   ];
 
   return (
-    <main className="flex-1 overflow-y-auto bg-black">
+    <main className="flex-1 overflow-y-auto bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold mb-2">Explore anything</h1>
-          <p className="text-gray-400">Discover incredible AI creations</p>
+          <p className="text-ink-muted">Discover incredible AI creations</p>
         </div>
 
         {/* Search Bar */}
@@ -34,24 +34,24 @@ const MainContent: React.FC<MainContentProps> = ({ activeTab }) => {
             placeholder="Describe to explore..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-full py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full bg-surface border border-surface-border rounded-full py-4 px-6 text-ink placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
           />
-          <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white">
+          <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-ink-muted hover:text-ink">
             <Search size={20} />
           </button>
         </div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          <button className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 rounded-full">
+          <button className="flex items-center gap-2 bg-surface hover:bg-cream-deep text-ink px-4 py-2 rounded-full">
             <Image size={18} />
             <span>Image</span>
           </button>
-          <button className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 rounded-full">
+          <button className="flex items-center gap-2 bg-surface hover:bg-cream-deep text-ink px-4 py-2 rounded-full">
             <Shuffle size={18} />
             <span>Recommended</span>
           </button>
-          <button className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 rounded-full">
+          <button className="flex items-center gap-2 bg-surface hover:bg-cream-deep text-ink px-4 py-2 rounded-full">
             <Shield size={18} />
             <span>Safe Mode</span>
           </button>
@@ -60,7 +60,7 @@ const MainContent: React.FC<MainContentProps> = ({ activeTab }) => {
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {galleryImages.map((image) => (
-            <div key={image.id} className="group relative overflow-hidden rounded-xl aspect-square bg-zinc-800">
+            <div key={image.id} className="group relative overflow-hidden rounded-xl aspect-square bg-cream-deep">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-0 group-hover:opacity-70 transition-opacity"></div>
               <img
                 src={`${image.url}?w=600&h=600&fit=crop&crop=entropy&auto=format&q=80`}
@@ -68,8 +68,8 @@ const MainContent: React.FC<MainContentProps> = ({ activeTab }) => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform">
-                <h3 className="text-white font-semibold">{image.alt}</h3>
-                <button className="mt-2 text-sm text-gray-300 flex items-center">
+                <h3 className="text-ink font-semibold">{image.alt}</h3>
+                <button className="mt-2 text-sm text-ink-muted flex items-center">
                   View details <ChevronRight size={16} className="ml-1" />
                 </button>
               </div>

@@ -1,6 +1,6 @@
 // Sidebar.tsx
 import React from 'react';
-import { Home, Brain, MessageSquare, Activity, User, Settings, HelpCircle } from 'lucide-react';
+import { Home, Brain, MessageSquare, Activity } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -13,47 +13,41 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, activeTab, setActiveTab }) =>
   const navItems = [
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'diagnosis', icon: Brain, label: 'Scan' },
-    { id: 'survival', icon: Activity, label: 'Survival' }, // New nav item
+    { id: 'survival', icon: Activity, label: 'Survival' },
     { id: 'chat', icon: MessageSquare, label: 'Chat' },
-    { id: 'reports', icon: Activity, label: 'Reports' },
-    { id: 'profile', icon: User, label: 'Profile' },
-    { id: 'settings', icon: Settings, label: 'Settings' },
-    { id: 'help', icon: HelpCircle, label: 'Help' },
   ];
 
   return (
-    <div 
-      className={`fixed left-0 top-0 z-40 h-full bg-zinc-900/90 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out ${
-        isOpen ? 'w-[80px] lg:w-[80px]' : 'w-0 lg:w-[80px]'
+    <div
+      className={`fixed left-0 top-0 z-40 h-full bg-surface-warm border-r border-surface-border transition-all duration-300 ease-in-out ${
+        isOpen ? 'w-[80px] lg:w-[80px]' : 'w-0 lg:w-[80px] overflow-hidden'
       }`}
-      style={{
-        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)'
-      }}
     >
       <div className="flex flex-col h-full">
         {/* Logo */}
-        <div className="p-4 flex justify-center items-center h-16 border-b border-zinc-800/50">
-          <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">SS</span>
+        <div className="p-4 flex justify-center items-center h-16 border-b border-surface-border">
+          <span className="w-9 h-9 bg-accent-btn rounded-lg flex items-center justify-center text-white font-mono text-sm font-semibold">
+            SS
+          </span>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 py-8">
-          <ul className="space-y-6">
+          <ul className="space-y-4">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <li key={item.id} className="px-4">
+                <li key={item.id} className="px-3">
                   <button
                     onClick={() => setActiveTab(item.id)}
                     className={`w-full flex flex-col items-center justify-center p-3 rounded-xl transition-all ${
                       activeTab === item.id
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                        : 'text-gray-400 hover:text-white hover:bg-zinc-800/50'
+                        ? 'bg-accent-btn text-white'
+                        : 'text-ink-muted hover:text-ink hover:bg-cream-deep'
                     }`}
                   >
-                    <Icon size={24} />
-                    <span className="text-xs mt-1">{item.label}</span>
+                    <Icon size={22} />
+                    <span className="text-[11px] mt-1">{item.label}</span>
                   </button>
                 </li>
               );
@@ -61,13 +55,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, activeTab, setActiveTab }) =>
           </ul>
         </nav>
 
-        {/* User */}
-        <div className="p-4 border-t border-zinc-800/50">
-          <button className="w-full flex flex-col items-center justify-center p-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-800/50">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <User size={16} />
-            </div>
-          </button>
+        <div className="p-4 text-center border-t border-surface-border">
+          <a
+            href="https://r1ch3rd.github.io/folio/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[10px] text-ink-faint hover:text-accent-deep transition-colors"
+          >
+            by RS
+          </a>
         </div>
       </div>
     </div>
