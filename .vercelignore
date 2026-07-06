@@ -1,0 +1,12 @@
+# Backend lives on Hugging Face Spaces; Vercel builds only the Vite app.
+# Without this, Vercel sees requirements*.txt and runs a Python install.
+api.py
+chat.py
+Dockerfile
+requirements.txt
+requirements-space.txt
+*.pt
+*.pth
+*.pkl
+brain-tumor.pdf
+classification.ipynb
